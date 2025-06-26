@@ -129,7 +129,6 @@ html {
 .dark a{
   color: #ffffff;
   background-color: #4ada12ad;
-  border: 1px solid #6b7280; 
 }
 
 
@@ -169,10 +168,11 @@ html {
 }
 
 .dark nav {
-  background-color: cornsilk;
   color: #ffffff;
-  opacity: 0.9;
+  background-color: rgba(241, 241, 241, 0.5);
+  backdrop-filter: blur(10px);
 }
+
 
 .dark nav a {
   color: #0e0e0e;
