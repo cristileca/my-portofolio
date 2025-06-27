@@ -1,21 +1,72 @@
+import { useEffect, useRef, useState } from "react"
 import { skills } from "../data/skills"
 
-const About = () => {
-  const SkillBar = ({ skill }) => (
-    <div className="mb-4">
+const SkillBar = ({ skill, index }) => {
+  const [visible, setVisible] = useState(false)
+  const [displayLevel, setDisplayLevel] = useState(0)
+  const ref = useRef()
+  const intervalRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            setVisible(true)
+          }, index * 25)
+        } else {
+          setVisible(false)
+          setDisplayLevel(0)
+          clearInterval(intervalRef.current)
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    if (ref.current) observer.observe(ref.current)
+
+    return () => {
+      observer.disconnect()
+      clearInterval(intervalRef.current)
+    }
+  }, [index])
+
+  useEffect(() => {
+    if (visible) {
+      let current = 0
+      const target = skill.level
+      const duration = 1000 // ms
+      const steps = Math.floor(duration / 16) // ~60fps
+      const increment = target / steps
+
+      intervalRef.current = setInterval(() => {
+        current += increment
+        if (current >= target) {
+          current = target
+          clearInterval(intervalRef.current)
+        }
+        setDisplayLevel(Math.round(current))
+      }, 16)
+    }
+  }, [visible, skill.level])
+
+  return (
+    <div ref={ref} className="mb-4">
       <div className="flex justify-between mb-1">
         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">{skill.level}%</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400">{displayLevel}%</span>
       </div>
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
         <div
           className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-1000 ease-out"
-          style={{ width: `${skill.level}%` }}
-        ></div>
+          style={{ width: visible ? `${skill.level}%` : "0%" }}
+        />
       </div>
     </div>
   )
+}
 
+const About = () => {
   return (
     <section id="about" className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,17 +84,13 @@ const About = () => {
             <div className="space-y-4 text-gray-600 dark:text-gray-300">
               <p>
                 I started my journey in web development 5 years ago, driven by a passion for creating beautiful and
-                functional digital experiences. What began as curiosity about how websites work has evolved into a
-                fulfilling career building applications that solve real-world problems.
+                functional digital experiences...
               </p>
               <p>
-                I specialize in modern JavaScript frameworks, with expertise in React, Node.js, and cloud technologies.
-                I believe in writing clean, maintainable code and staying up-to-date with the latest industry trends and
-                best practices.
+                I specialize in modern JavaScript frameworks, with expertise in React, Node.js, and cloud technologies...
               </p>
               <p>
-                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects,
-                or sharing knowledge with the developer community through blog posts and mentoring.
+                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects...
               </p>
             </div>
           </div>
@@ -54,15 +101,15 @@ const About = () => {
             <div className="space-y-8">
               <div>
                 <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Frontend Development</h4>
-                {skills.frontend.map((skill) => (
-                  <SkillBar key={skill.name} skill={skill} />
+                {skills.frontend.map((skill, i) => (
+                  <SkillBar key={skill.name} skill={skill} index={i} />
                 ))}
               </div>
 
               <div>
                 <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Backend Development</h4>
-                {skills.backend.slice(0, 4).map((skill) => (
-                  <SkillBar key={skill.name} skill={skill} />
+                {skills.backend.map((skill, i) => (
+                  <SkillBar key={skill.name} skill={skill} index={i + skills.frontend.length} />
                 ))}
               </div>
             </div>
