@@ -29,7 +29,7 @@ const Footer = () => {
 
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400 mb-2">Built with React, Vite, and Tailwind CSS</p>
-            <p className="text-gray-500 dark:text-gray-500 text-sm">© 2024 Your Name. All rights reserved.</p>
+            <p className="text-gray-500 dark:text-gray-500 text-sm">© 2024 Leca Marian-Cristian. All rights reserved.</p>
           </div>
         </div>
       </div>
