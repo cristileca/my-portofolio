@@ -18,13 +18,28 @@ const Contact = () => {
     })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log("Form submitted:", formData)
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" })
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://localhost:3000/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      console.log("✅ Submission successful!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } else {
+      console.error("❌ Submission failed:", await response.text());
+    }
+  } catch (err) {
+    console.error("❌ Error submitting form:", err);
   }
+};
 
   const contactInfo = [
     {
@@ -46,6 +61,8 @@ const Contact = () => {
       href: "#",
     },
   ]
+
+  
 
   return (
     <section id="contact" className="py-20 bg-white dark:bg-gray-900">
@@ -83,7 +100,7 @@ const Contact = () => {
             </div>
 
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-6 rounded-lg">
-              <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Quick Response</h4>
+              <h4 className="font-semibold quote text-gray-900 dark:text-white mb-2">Quick Response</h4>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
                 I typically respond to emails within 24 hours. For urgent matters, feel free to call or connect with me
                 on LinkedIn.

@@ -169,7 +169,7 @@ html {
 
 .dark nav {
   color: #ffffff;
-  background-color: rgba(241, 241, 241, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
 }
 
@@ -272,3 +272,12 @@ html {
 .dark .down-arrow{
   background: none;
 }
+
+.dark .quote{
+  color:#374151
+}
+
+.dark .logo {
+  color: #374151;
+}
+
