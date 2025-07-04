@@ -20,7 +20,7 @@ const Testimonials = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex items-center mb-4">
-                <Quote className="text-blue-600 dark:text-blue-400 mr-2" size={24} />
+                <Quote className="text-blue-900 quote dark:text-blue-400 mr-2" size={24} />
                 <div className="h-px bg-gray-200 dark:bg-gray-700 flex-1"></div>
               </div>
 

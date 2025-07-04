@@ -36,9 +36,9 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <button
               onClick={() => scroll.scrollToTop()}
-              className="text-2xl font-bold text-gray-900 dark:text-white cursor-pointer"
+              className="text-2xl  logo font-bold text-gray-900 dark:text-white cursor-pointer"
             >
-              Portfolio
+              Portofolio
             </button>
           </div>
 
@@ -72,7 +72,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden transition-all duration-300 overflow-hidden bg-white/70 dark:bg-gray-900/70 backdrop-blur-md ${
+        className={`md:hidden transition-all duration-300 overflow-hidden backdrop-blur-md bg-none ${
           isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
         }`}
       >

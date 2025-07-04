@@ -8,11 +8,11 @@ const Hero = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
         <div className="text-center">
-          <div className="mb-8 animate-fadeInUp">
+          <div className="mb-8 mt-12 animate-fadeInUp">
             <img
-              src="/placeholder.svg?height=200&width=200"
+              src="/poza-profil.PNG"
               alt="Profile"
-              className="w-32 h-32 rounded-full mx-auto mb-6 shadow-lg border-4 border-white dark:border-gray-700"
+              className="w-60 cover  mx-auto mb-6 "
             />
           </div>
 
