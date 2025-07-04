@@ -237,3 +237,38 @@ html {
     font-weight: 700;
     font-size: 1rem;
 }
+
+.dark .technologies{
+  background: #4ada12ad;
+  color:#ffffff;
+  border:none;
+}
+
+.dark .testimonials{
+  background: linear-gradient(to right , #3b83f67e, #8a5cf686); 
+  color:#ffffff;
+  border:none;
+}
+
+.dark .testimonials p{
+  color: #000;
+  font-weight: 500;
+}
+
+.dark .testimonials h4{
+  color: #000;
+  font-weight: 700;
+}
+
+.dark .buttons{
+  color:white;
+}
+
+.dark .download {
+  border:none;
+  color: white;
+}
+
+.dark .down-arrow{
+  background: none;
+}

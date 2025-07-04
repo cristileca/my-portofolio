@@ -161,10 +161,10 @@ const Contact = () => {
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
+                className="w-full technologies bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
               >
                 <Send size={20} />
-                <span>Send Message</span>
+                <span className="buttons ">Send Message</span>
               </button>
             </form>
           </div>

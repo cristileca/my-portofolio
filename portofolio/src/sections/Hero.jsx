@@ -37,17 +37,17 @@ const Hero = () => {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-8 py-3 rounded-lg font-medium border border-gray-300 dark:border-gray-600 hover:shadow-lg transition-all duration-200 transform hover:scale-105"
+              className="flex items-center download space-x-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-8 py-3 rounded-lg font-medium border border-gray-300 dark:border-gray-600 hover:shadow-lg transition-all duration-200 transform hover:scale-105"
             >
               <Download size={20} />
-              <span>Download Resume</span>
+              <span className="download">Download Resume</span>
             </a>
           </div>
 
-          <div className="animate-bounce-slow">
+          <div className="animate-bounce-slow w-full flex justify-center mt-8">
             <a
               href="#about"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+              className="text-gray-600 down-arrow dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
             >
               <ChevronDown size={32} />
             </a>
