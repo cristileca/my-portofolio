@@ -4,18 +4,49 @@ import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import ThemeToggle from "./ThemeToggle"
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll"
+import Dashboard from "./DashboardAdmin"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [logoClicks, setLogoClicks] = useState(0);
+  const [startTime, setStartTime] = useState(null);
+
+  
+  const handleLogoClick = () => {
+    const now = Date.now();
+    console.log(logoClicks, startTime, now);
+    if (!startTime) {
+      setStartTime(now);
+      setLogoClicks(1);
+    } else {
+      const elapsed = now - startTime;
+
+      if (elapsed <= 5000) {
+        setLogoClicks((prev) => prev + 1);
+      } else {
+        setStartTime(now);
+        setLogoClicks(1);
+      }
+    }
+  };
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+    if (!startTime) return;
+
+    const timer = setTimeout(() => {
+      setLogoClicks(0);
+      setStartTime(null);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [startTime]);
+
+  useEffect(() => {
+    if (logoClicks >= 5) {
+      window.location.search = "?admin=secret";
     }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [logoClicks]);
 
   const navItems = [
     { name: "Home", to: "home" },
@@ -35,7 +66,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
             <button
-              onClick={() => scroll.scrollToTop()}
+              onClick={() => {scroll.scrollToTop(); handleLogoClick()}}
               className="text-2xl  logo font-bold text-gray-900 dark:text-white cursor-pointer"
             >
               Portofolio
@@ -70,7 +101,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* mobile menu */}
       <div
         className={`md:hidden transition-all duration-300 overflow-hidden backdrop-blur-md bg-none ${
           isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
