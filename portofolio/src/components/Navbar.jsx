@@ -15,7 +15,6 @@ const Navbar = () => {
   
   const handleLogoClick = () => {
     const now = Date.now();
-    console.log(logoClicks, startTime, now);
     if (!startTime) {
       setStartTime(now);
       setLogoClicks(1);
