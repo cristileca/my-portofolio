@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
+import SuccesModal from "../components/SuccesModal"
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Contact = () => {
     subject: "",
     message: "",
   })
+  const [isSent, setIsSent] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
@@ -18,28 +20,30 @@ const Contact = () => {
     })
   }
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const response = await fetch("http://localhost:3000/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const response = await fetch("http://localhost:3000/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (response.ok) {
-      console.log("✅ Submission successful!");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } else {
-      console.error("❌ Submission failed:", await response.text());
+      if (response.ok) {
+        console.log("✅ Submission successful!");
+        setIsSent(true);
+        setTimeout(() => setIsSent(false), 3000);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        console.error("❌ Submission failed:", await response.text());
+      }
+    } catch (err) {
+      console.error("❌ Error submitting form:", err);
     }
-  } catch (err) {
-    console.error("❌ Error submitting form:", err);
-  }
-};
+  };
 
   const contactInfo = [
     {
@@ -62,7 +66,7 @@ const Contact = () => {
     },
   ]
 
-  
+
 
   return (
     <section id="contact" className="py-20 bg-white dark:bg-gray-900">
@@ -109,81 +113,94 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="animate-fadeInRight">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="relative">
+            {isSent && (
+              <div className="fixed inset-0 z-50 blur-2xl cursor-not-allowed"></div>
+            )}
+
+            <div className={`animate-fadeInRight`}>
+              <form onSubmit={handleSubmit} className={`space-y-6 ${isSent ? "blur-sm disabled z-60" : ""}`}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-200"
+                      placeholder="Your Name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-200"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label htmlFor="name" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Name
+                  <label htmlFor="subject" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Subject
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-200"
-                    placeholder="Your Name"
+                    placeholder="What's this about?"
                   />
                 </div>
+
                 <div>
-                  <label htmlFor="email" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email
+                  <label htmlFor="message" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Message
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-200"
-                    placeholder="your.email@example.com"
+                    rows={6}
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-200 resize-none"
+                    placeholder="Tell me about your project or just say hello!"
                   />
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="subject" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-200"
-                  placeholder="What's this about?"
-                />
-              </div>
+                <button
+                  type="submit"
+                  className="w-full technologies bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
+                >
+                  <Send size={20} />
+                  <span className="buttons ">Send Message</span>
+                </button>
+              </form>
+            </div>
 
-              <div>
-                <label htmlFor="message" className="block contact-form text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors duration-200 resize-none"
-                  placeholder="Tell me about your project or just say hello!"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full technologies bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
-              >
-                <Send size={20} />
-                <span className="buttons ">Send Message</span>
-              </button>
-            </form>
+            {isSent && (
+              <SuccesModal
+                message="Message sent successfully!"
+                onClose={() => setIsSent(false)}
+              />
+            )}
           </div>
         </div>
       </div>

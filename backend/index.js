@@ -29,9 +29,11 @@ db.run(`
     name TEXT,
     email TEXT,
     message TEXT,
+    read INTEGER DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
 `);
+
 
 // receive form submissions
 app.post('/submit', (req, res) => {
@@ -64,6 +66,53 @@ app.get('/submissions', (req, res) => {
     res.json(rows);
   });
 });
+
+//update read status of a submission
+app.patch('/submissions/:id', (req, res) => {
+  const { id } = req.params;
+  const { read } = req.body;
+
+  if (typeof read !== 'boolean') {
+    return res.status(400).json({ error: "'read' must be boolean" });
+  }
+
+  db.run(
+    `UPDATE submissions SET read = ? WHERE id = ?`,
+    [read ? 1 : 0, id],
+    function (err) {
+      if (err) {
+        console.error('❌ Database error:', err.message);
+        return res.status(500).json({ error: 'Failed to update submission.' });
+      }
+      if (this.changes === 0) {
+        return res.status(404).json({ error: 'Submission not found.' });
+      }
+      res.json({ success: true });
+    }
+  );
+});
+
+// delete a submission
+app.delete('/submissions/:id', (req, res) => {
+  const { id } = req.params;
+  console.log(`Delete request for id:`, id);
+  
+  db.run(
+    `DELETE FROM submissions WHERE id = ?`,
+    [id],
+    function (err) {
+      if (err) {
+        console.error('❌ Database error:', err.message);
+        return res.status(500).json({ error: 'Failed to delete submission.' });
+      }
+      if (this.changes === 0) {
+        return res.status(404).json({ error: 'Submission not found.' });
+      }
+      res.json({ success: true });
+    }
+  );
+});
+
 
 // start server
 app.listen(PORT, () => {
