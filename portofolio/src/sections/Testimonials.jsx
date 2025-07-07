@@ -28,9 +28,9 @@ const Testimonials = () => {
 
               <div className="flex items-center">
                 <img
-                  src={testimonial.avatar || "/placeholder.svg"}
+                  src={testimonial.avatar || "/avatar.png"}
                   alt={testimonial.name}
-                  className="w-12 h-12 rounded-full mr-4"
+                  className="w-12 h-12 object-contain rounded-full mr-4"
                 />
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>

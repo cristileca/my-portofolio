@@ -16,12 +16,12 @@ const Hero = () => {
             />
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 animate-fadeInUp">
+          <h1 className="text-5xl md:text-7xl font-medium text-gray-900 dark:text-white mb-6 animate-fadeInUp">
             Hi, I'm{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Leca Marian-Cristian</span>
+            <span className="text-transparent bg-clip-text title bg-gradient-to-r from-blue-600 to-purple-600">Leca Marian-Cristian</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto animate-fadeInUp">
+          <p className="title text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto animate-fadeInUp">
             A passionate Full Stack Developer creating amazing digital experiences with modern technologies and clean
             code.
           </p>

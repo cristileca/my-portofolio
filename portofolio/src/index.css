@@ -284,3 +284,11 @@ html {
 html, body {
   overflow-x: hidden;
 }
+
+.dark .title{
+  color:rgba(22, 22, 22, 0.795);
+}
+
+.dark .succes{
+  color: #ffffff;
+}

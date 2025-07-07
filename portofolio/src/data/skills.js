@@ -36,7 +36,7 @@ export const testimonials = [
     company: "TechCorp Solutions",
     content:
       "Working with this developer has been an absolute pleasure. Their attention to detail and ability to translate complex requirements into elegant solutions is remarkable.",
-    avatar: "/placeholder.svg?height=60&width=60",
+    avatar: "/avatar.png?height=60&width=60",
   },
   {
     id: 2,
@@ -45,7 +45,8 @@ export const testimonials = [
     company: "StartupXYZ",
     content:
       "One of the most talented developers I've worked with. They consistently deliver high-quality code and are always willing to go the extra mile to ensure project success.",
-    avatar: "/placeholder.svg?height=60&width=60",
+    avatar: "/avatar.png?height=60&width=60",
+
   },
   {
     id: 3,
@@ -54,6 +55,7 @@ export const testimonials = [
     company: "Digital Agency Pro",
     content:
       "Their ability to bring designs to life with pixel-perfect precision while maintaining excellent performance is truly impressive. A valuable team member.",
-    avatar: "/placeholder.svg?height=60&width=60",
+    avatar: "/avatar.png?height=60&width=60",
+
   },
 ]
