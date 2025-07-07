@@ -281,3 +281,6 @@ html {
   color: #374151;
 }
 
+html, body {
+  overflow-x: hidden;
+}

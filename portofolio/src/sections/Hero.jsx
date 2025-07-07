@@ -35,6 +35,7 @@ const Hero = () => {
             </a>
             <a
               href="/resume.pdf"
+              download="LecaMarianCristianCv.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center download space-x-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-8 py-3 rounded-lg font-medium border border-gray-300 dark:border-gray-600 hover:shadow-lg transition-all duration-200 transform hover:scale-105"
